@@ -31,9 +31,9 @@ class CardSwiper extends StatelessWidget {
         itemWidth: _screenSize.width * 0.7,
         itemHeight: _screenSize.height * 0.5,
         //puntitos como page controller
-        pagination: SwiperPagination(),
+        //pagination: SwiperPagination(),
         //barras en los lados
-        control: SwiperControl(),
+        //control: SwiperControl(),
       ),
     );
   }
