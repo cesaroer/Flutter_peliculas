@@ -64,4 +64,12 @@ class Pelicula {
     video = json["video"];
     voteAverage = json["vote_average"] / 1;
   }
+
+  getPosterImg() {
+    if (posterPath == null) {
+      return "https://www.ecpgr.cgiar.org/fileadmin/templates/ecpgr.org/Assets/images/No_Image_Available.jpg";
+    } else {
+      return "http://image.tmdb.org/t/p/w500/$posterPath";
+    }
+  }
 }
