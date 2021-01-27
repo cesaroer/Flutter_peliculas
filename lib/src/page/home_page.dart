@@ -44,10 +44,12 @@ class HomePage extends StatelessWidget {
     );
   }
 
+//Esto nos va a dar el catalogo de peliculas populares en horizontal
   Widget _footer(BuildContext context) {
     return Container(
       width: double.infinity,
       child: Column(
+        //Con esto ponemos el texto de populares al principio de la pantalla
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
@@ -62,6 +64,7 @@ class HomePage extends StatelessWidget {
             future: peliculasProvider.getPopulares(),
             builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
               if (snapshot.hasData) {
+                //Movie horizontal es nuestro widget de view pager con peliculas
                 return MovieHorizontal(peliculas: snapshot.data);
               } else {
                 return Center(
