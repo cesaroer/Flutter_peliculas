@@ -6,7 +6,7 @@ import "package:http/http.dart" as http;
 class PeliculasProvider {
   String _apiKey = "8573a35068a01db80b732e80e04d33dc";
   String _url = "api.themoviedb.org";
-  String _language = "es-ES";
+  String language = "es-ES";
 
   Future<List<Pelicula>> _procesarRespuesta(Uri url) async {
     final respuesta = await http.get(url);
@@ -18,14 +18,14 @@ class PeliculasProvider {
 
   Future<List<Pelicula>> getEnCines() async {
     final url = Uri.https(_url, "3/movie/now_playing",
-        {"api_key": _apiKey, "languaje": _language});
+        {"api_key": _apiKey, "languaje": language});
 
     return await _procesarRespuesta(url);
   }
 
   Future<List<Pelicula>> getPopulares() async {
     final url = Uri.https(
-        _url, "3/movie/popular", {"api_key": _apiKey, "languaje": _language});
+        _url, "3/movie/popular", {"api_key": _apiKey, "languaje": language});
 
     return await _procesarRespuesta(url);
   }
