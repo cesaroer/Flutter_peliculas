@@ -72,4 +72,12 @@ class Pelicula {
       return "http://image.tmdb.org/t/p/w500/$posterPath";
     }
   }
+
+  getBackgroundImg() {
+    if (posterPath == null) {
+      return "https://www.ecpgr.cgiar.org/fileadmin/templates/ecpgr.org/Assets/images/No_Image_Available.jpg";
+    } else {
+      return "http://image.tmdb.org/t/p/w500/$backdropPath";
+    }
+  }
 }
