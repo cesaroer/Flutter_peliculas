@@ -1,3 +1,4 @@
+//Esta clase es para construir una lista de actores de una lista dynamic
 class Cast {
   List<Actor> actores = new List();
 
@@ -11,6 +12,8 @@ class Cast {
   }
 }
 
+//Esta clase es para parsear un json (String,dynamic )
+//en una instancia de actor
 class Actor {
   bool adult;
   int gender;
