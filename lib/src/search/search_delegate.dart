@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/Models/pelicula_model.dart';
+import 'package:peliculas/src/providers/peliculas_provider.dart';
 
 //Clase para el buscador
 class DataSearch extends SearchDelegate {
   String seleccion = "";
+  final peliculasProvider = new PeliculasProvider();
 
   final peliculas = [
     "Spiderman",
@@ -66,25 +69,69 @@ class DataSearch extends SearchDelegate {
     // Sugerencias que aparecen al teclear
     // Mostramos un list o table view con elementos
 
-    //Si query es "" entonces dejo peliculas sugeridas,
-    //si no filtro sobre la lista de peliculas y lo muestro
-    final listaSugerida = (query.isEmpty)
-        ? peliculasRecientes
-        : peliculas
-            .where((pelicula) => pelicula.toLowerCase().startsWith(query))
-            .toList();
+    if (query.isEmpty) {
+      return Container();
+    }
 
-    return ListView.builder(
-        itemCount: listaSugerida.length,
-        itemBuilder: (context, i) {
-          return ListTile(
-            leading: Icon(Icons.movie),
-            title: Text(listaSugerida[i]),
-            onTap: () {
-              seleccion = listaSugerida[i];
-              showResults(context);
-            },
+    return FutureBuilder(
+      future: peliculasProvider.buscarPelicula(query),
+      builder: (BuildContext context, AsyncSnapshot<List<Pelicula>> snapshot) {
+        if (snapshot.hasData) {
+          final peliculas = snapshot.data;
+
+          return ListView(
+            children: peliculas.map(
+              (pelicula) {
+                return ListTile(
+                  leading: FadeInImage(
+                    image: NetworkImage(pelicula.getPosterImg()),
+                    placeholder: AssetImage("assets/img/no-image.jpg"),
+                    width: 50.0,
+                    fit: BoxFit.contain,
+                  ),
+                  title: Text(pelicula.title),
+                  subtitle: Text(pelicula.originalTitle),
+                  onTap: () {
+                    close(context, null);
+                    pelicula.uniqueId = "";
+                    Navigator.pushNamed(context, "detalle",
+                        arguments: pelicula);
+                  },
+                );
+              },
+            ).toList(),
           );
-        });
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
+
+  // @override
+  // Widget buildSuggestions(BuildContext context) {
+  //   // Sugerencias que aparecen al teclear
+  //   // Mostramos un list o table view con elementos
+
+  //   //Si query es "" entonces dejo peliculas sugeridas,
+  //   //si no filtro sobre la lista de peliculas y lo muestro
+  //   final listaSugerida = (query.isEmpty)
+  //       ? peliculasRecientes
+  //       : peliculas
+  //           .where((pelicula) => pelicula.toLowerCase().startsWith(query))
+  //           .toList();
+
+  //   return ListView.builder(
+  //       itemCount: listaSugerida.length,
+  //       itemBuilder: (context, i) {
+  //         return ListTile(
+  //           leading: Icon(Icons.movie),
+  //           title: Text(listaSugerida[i]),
+  //           onTap: () {
+  //             seleccion = listaSugerida[i];
+  //             showResults(context);
+  //           },
+  //         );
+  //       });
+  // }
 }
