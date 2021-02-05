@@ -11,6 +11,7 @@ class PeliculasProvider {
   String language = "es-ES";
   int _popularesPage = 0;
   bool _cargando = false;
+  bool _cargandoEnCines = false;
 
   List<Pelicula> _populares = new List();
 
@@ -41,10 +42,17 @@ class PeliculasProvider {
   }
 
   Future<List<Pelicula>> getEnCines() async {
+    if (_cargandoEnCines) return [];
+
+    _cargandoEnCines = true;
+
     final url = Uri.https(_url, "3/movie/now_playing",
         {"api_key": _apiKey, "languaje": language});
 
-    return await _procesarRespuesta(url);
+    final response = await _procesarRespuesta(url);
+
+    _cargandoEnCines = false;
+    return response;
   }
 
   Future<List<Pelicula>> getPopulares() async {

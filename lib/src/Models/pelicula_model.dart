@@ -16,6 +16,7 @@ class Peliculas {
 }
 
 class Pelicula {
+  String uniqueId; // propiedad inventada y no seteada para la api
   String posterPath;
   bool adult;
   String overview;
