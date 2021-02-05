@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:peliculas/src/providers/peliculas_provider.dart';
+import 'package:peliculas/src/search/search_delegate.dart';
 import 'package:peliculas/src/widgets/card_swiper_widget.dart';
 import 'package:peliculas/src/widgets/movie_horizontal.dart';
 
@@ -19,7 +20,20 @@ class HomePage extends StatelessWidget {
           title: Text("Películas"),
           backgroundColor: Colors.indigoAccent,
           elevation: 0,
-          actions: [IconButton(icon: Icon(Icons.search), onPressed: () {})],
+          actions: [
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                //Metodo de flutter
+                showSearch(
+                  context: context,
+                  delegate: DataSearch(),
+                  //Aqui podemos inicializar con un string si queremos
+                  //query: "Hola",
+                );
+              },
+            )
+          ],
         ),
         body: Container(
           child: Column(
